@@ -1,0 +1,9 @@
+--top-module #<chose test bench .sv as top module>
+-Wall
+-Wno-fatal
+-j 0
+--assert
+--trace-fst
+--trace-structs
+--x-assign unique
+--x-initial unique
