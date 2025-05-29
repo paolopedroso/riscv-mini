@@ -15,7 +15,11 @@ module decode (
     output logic [2:0] rs2_addr_o,
     output logic [3:0] func4_o,    // Extended opcode field, e.g., for R-type
     output logic [2:0] func2_o,    // Opcode qualifier, e.g., like funct3 for I,L,S,B-types
-    output logic [5:0] imm_o
+    output logic [5:0] imm_o,
+
+    // Control
+    // output logic       mem_write_o,
+    // output logic       mem_read_o
 );
 
 localparam R_OP = 3'b000; // R-type (register-register)
@@ -58,6 +62,10 @@ always_comb begin
             rs1_addr_o  = instr[8:6];
             func2_o     = instr[11:9];
             imm_o       = {{2{instr[15]}}, instr[15:12]};
+
+            // // Control
+            // mem_write_o = 1'b0;
+            // mem_read_o = 1'b1;
         end
 
         S_OP: begin
@@ -66,6 +74,10 @@ always_comb begin
             rs2_addr_o  = instr[5:3];
             func2_o     = instr[11:9];
             imm_o       = {{2{instr[15]}}, instr[15:12]};
+
+            // // Control
+            // mem_write_o = 1'b1;
+            // mem_read_o = 1'b0;    
         end
 
         B_OP: begin
