@@ -1,10 +1,9 @@
 /*
  * Paolo Pedroso
  *
- * 
- * 
- * Data Memory
+ * Apache 2.0 License
  *
+ * Small Data Memory
  */
 
 // alu_o = mem_addr
