@@ -43,7 +43,18 @@ always_ff @(posedge clk) begin
 
     // Synchrounous read logic
     end else if (mem_read_i && (mem_addr < MEM_SIZE)) begin
-        read_data_o <= memory[mem_addr];
+        
+        // Write Priotity (SHOULDNT HAPPEN)
+        if (mem_write_i) begin
+            memory[mem_addr] <= mem_data;
+
+
+            $display("DMEM: WRITE AND READ BOTH ENABLED");
+            $display("DMEM: CHECK PIPELINE");
+
+        end else begin
+            read_data_o <= memory[mem_addr];
+        end
 
     // No read/write
     end else begin
