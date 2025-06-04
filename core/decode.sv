@@ -11,7 +11,6 @@ import riscv_pkg::*;
 module decode (
     input logic [15:0] instr,
 
-    // output logic [2:0] op_o,
     output logic [2:0] rs1_addr_o,
     output logic [2:0] rd_o,
     output logic [2:0] rs2_addr_o,
