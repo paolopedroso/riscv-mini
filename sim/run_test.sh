@@ -27,7 +27,7 @@ fi
 
 echo "Initializing tests..."
 echo "Skipping Warnings..."
-verilator --cc --top-module "$TB_MODULE" ../core/"$CORE_FILE" "../tb/$TB_FILE" --timing --exe --main --Wno-fatal
+verilator --cc --top-module "$TB_MODULE" ../core/riscv_pkg.sv ../core/"$CORE_FILE" "../tb/$TB_FILE" --timing --exe --main --Wno-fatal
 make -C obj_dir -f V${TB_MODULE}.mk
 
 echo "Simulating $1..."
