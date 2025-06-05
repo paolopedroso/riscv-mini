@@ -7,12 +7,15 @@
  */
 
 module tb_alu;
-    logic [15:0] rs1_data;
-    logic [15:0] rs2_data;
-    logic [15:0] imm;
+    logic [15:0] rs1_data_i;
+    logic [15:0] rs2_data_i;
+    logic [15:0] imm_data_i;
     logic [3:0]  func4;
     logic        imm_en_i;
     logic [15:0] alu_data_o;
+
+    logic jalr_en_i;
+    // logic [15:0] rs1_data_i;
 
     alu dut(.*);
 
@@ -43,9 +46,9 @@ module tb_alu;
         endcase
 
         // Apply inputs to DUT
-        rs1_data = rs1_data_in;
-        rs2_data = rs2_data_in;
-        imm = imm_in;
+        rs1_data_i = rs1_data_in;
+        rs2_data_i = rs2_data_in;
+        imm_data_i = imm_in;
         func4 = func4_in;
         imm_en_i = imm_en_i_in;
         
@@ -69,11 +72,12 @@ module tb_alu;
 
     // Task to reset all inputs
     task reset_inputs();
-        rs1_data = 16'd0;
-        rs2_data = 16'd0;
-        imm = 16'd0;
+        rs1_data_i = 16'd0;
+        rs2_data_i = 16'd0;
+        imm_data_i = 16'd0;
         func4 = 4'd0;
         imm_en_i = 1'b0;
+        jalr_en_i = 1'b0;
         #1;
     endtask
 
