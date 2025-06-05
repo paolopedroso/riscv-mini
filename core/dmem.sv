@@ -37,6 +37,7 @@ always_ff @(posedge clk) begin
         for (int i = 0; i < MEM_SIZE; i++) begin
             memory[i] = 16'b0;
         end
+
     // Synchronous write logic
     end else if (mem_write_i && (mem_addr < MEM_SIZE)) begin
         memory[mem_addr] <= mem_data;

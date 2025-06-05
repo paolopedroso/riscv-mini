@@ -13,7 +13,7 @@ module program_counter (
     input logic branch_en,
     input logic jal_en,
     input logic jalr_en,
-    input logic [15:0] imm_i,
+    input logic [15:0] imm_data_i,
     input logic [15:0] alu_data_i,
     input logic stall_en_i,
 
@@ -26,11 +26,11 @@ logic [15:0] pc_next;
 
 always_comb begin
     if (jal_en) begin
-        pc_next = pc_i + imm_i;
+        pc_next = pc_i + imm_data_i;
     end else if (jalr_en) begin
         pc_next = pc_i + alu_data_i;
     end else if (branch_en) begin
-        pc_next = pc_i + imm_i;
+        pc_next = pc_i + imm_data_i;
     end else begin
         pc_next = pc_i + 16'd4;
     end
