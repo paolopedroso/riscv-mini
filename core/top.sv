@@ -80,7 +80,8 @@ program_counter program_counter_inst(
     .pc_o(pc_o)
 );
 
-// IF/DE
+// IF/DE REGISTER //
+
 always_ff @(posedge clk) begin
     if (!rst_n || if_de_flush) begin
         if_de_pc <= '0;
@@ -137,7 +138,7 @@ regfile regfile_inst(
     .clk(clk),
     .rst_n(rst_n),
     .regw_en_i(write_valid),
-    .rd_addr_i(rd_addr),
+    .rd_addr_i(de_mw_rd_addr),
     .rd_data_i(write_data),
     .rs1_addr_i(rs1_addr),
     .rs2_addr_i(rs2_addr),
@@ -145,9 +146,39 @@ regfile regfile_inst(
     .rs2_data_o(rs2_data)
 );
 
+logic [1:0] forward_a;
+logic [1:0] forward_b;
+logic [15:0] alu_rs1_data;
+logic [15:0] alu_rs2_data;
+
+forward_unit forward_unit_inst(
+    .de_mw_rd_addr_i(de_mw_rd_addr),
+    .write_en_i(write_en),
+    .rs1_addr_i(rs1_addr),
+    .rs2_addr_i(rs2_addr),
+    .forward_a_o(forward_a),
+    .forward_b_o(forward_b)
+);
+
+always_comb begin
+    case(forward_a)
+        2'b00: alu_rs1_data = rs1_data;
+        2'b10: alu_rs1_data = de_mw_alu_data;
+    endcase
+    default: alu_rs1_data = rs1_data;
+end
+
+always_comb begin
+    case(forward_b)
+        2'b00: alu_rs2_data = rs2_data;
+        2'b10: alu_rs2_data = de_mw_alu_data;
+        default: alu_rs2_data = rs2_data;
+    endcase
+end
+
 alu alu_inst(
-    .rs1_data_i(rs1_data),
-    .rs2_data_i(rs2_data),
+    .rs1_data_i(alu_rs1_data),
+    .rs2_data_i(alu_rs2_data),
     .imm_data_i(imm_data),
     .imm_en_i(imm_en),
     .func4(func4),
@@ -155,7 +186,8 @@ alu alu_inst(
     .alu_data_o(alu_data)
 );
 
-// DE/MW
+// DE/MW REGISTER // 
+
 always_ff @(posedge clk) begin
     if (!rst_n || de_mw_flush) begin
         de_mw_pc <= '0;

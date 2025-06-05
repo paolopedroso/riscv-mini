@@ -42,7 +42,7 @@ always_ff @(posedge clk) begin
     end else if (mem_write_i && (mem_addr < MEM_SIZE)) begin
         memory[mem_addr] <= mem_data;
 
-    // Synchrounous read logic
+    // Synchronous read logic
     end else if (mem_read_i && (mem_addr < MEM_SIZE)) begin
         
         // Write Priotity (SHOULDNT HAPPEN)
