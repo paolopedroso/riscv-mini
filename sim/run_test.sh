@@ -27,7 +27,28 @@ fi
 
 echo "Initializing tests..."
 echo "Skipping Warnings..."
-verilator --cc --top-module "$TB_MODULE" ../core/riscv_pkg.sv ../core/"$CORE_FILE" "../tb/$TB_FILE" --timing --exe --main --Wno-fatal
+if [ "$TB_FILE" = 'tb_top.sv' ]; then
+    echo "Top file detected..."
+    verilator --cc --top-module tb_top \
+        ../core/riscv_pkg.sv \
+        ../core/alu.sv \
+        ../core/control.sv \
+        ../core/decode.sv \
+        ../core/dmem.sv \
+        ../core/forward_unit.sv \
+        ../core/hazard_detection.sv \
+        ../core/instr_mem.sv \
+        ../core/program_counter.sv \
+        ../core/regfile.sv \
+        ../core/wbmux.sv \
+        ../core/top.sv \
+        ../tb/tb_top.sv \
+        --timing --exe --main --Wno-fatal
+else
+    verilator --cc --top-module "$TB_MODULE" ../core/riscv_pkg.sv ../core/"$CORE_FILE" "../tb/$TB_FILE" --timing --exe --main --Wno-fatal
+fi;
+
+# verilator --cc --top-module "$TB_MODULE" ../core/riscv_pkg.sv ../core/"$CORE_FILE" "../tb/$TB_FILE" --timing --exe --main --Wno-fatal
 make -C obj_dir -f V${TB_MODULE}.mk
 
 echo "Simulating $1..."
