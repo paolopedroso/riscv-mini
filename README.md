@@ -14,6 +14,3 @@ dos2unix ./run_test.sh
 # Example
 # ./run_test tb_alu.sv alu.sv
 ```
-
-Future
-- Extended testing on OpenROAD/OpenLane2
