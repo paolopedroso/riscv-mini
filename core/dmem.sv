@@ -6,8 +6,6 @@
  * Small Data Memory
  */
 
-// alu_o = mem_addr
-// rs2 = 
 module dmem #(
     parameter int MEM_SIZE = 8192,
     parameter int ADDR_WIDTH = $clog2(MEM_SIZE) // Use 13 bits of address
@@ -31,33 +29,23 @@ reg [15:0] memory[0:MEM_SIZE-1];
 // Properly truncate bits
 assign mem_addr = address[ADDR_WIDTH-1:0];
 
+// Write Logic
 always_ff @(posedge clk) begin
     if (!rst_n) begin
-        read_data_o <= 16'b0;
         for (int i = 0; i < MEM_SIZE; i++) begin
-            memory[i] = 16'b0;
-        end
-
-    // Synchronous write logic
+            memory[i] = '0;
+        end 
     end else if (mem_write_i && (mem_addr < MEM_SIZE)) begin
+        $display("DMEM: Write enabled, mem_data=0x%d written to memory[mem_addr]=0x%b", mem_data, memory[mem_addr]);
         memory[mem_addr] <= mem_data;
+    end
+end
 
-    // Synchronous read logic
-    end else if (mem_read_i && (mem_addr < MEM_SIZE)) begin
-        
-        // Write Priotity (SHOULDNT HAPPEN)
-        if (mem_write_i) begin
-            memory[mem_addr] <= mem_data;
-
-
-            $display("DMEM: WRITE AND READ BOTH ENABLED");
-            $display("DMEM: CHECK PIPELINE");
-
-        end else begin
-            read_data_o <= memory[mem_addr];
-        end
-
-    // No read/write
+// Read Logic
+always_ff @(posedge clk) begin
+    if (mem_read_i && (mem_addr < MEM_SIZE)) begin
+        read_data_o <= memory[mem_addr];
+        $display("DMEM: Read enabled, memory[mem_addr]=0x%b written to read_data_o", memory[mem_addr]);
     end else begin
         read_data_o <= 16'b0;
     end

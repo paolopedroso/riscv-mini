@@ -18,17 +18,17 @@ module forward_unit(
 );
 
 always_comb begin
-    forward_a = 2'b0;
-    forward_b = 2'b0;
+    forward_a_o = 2'b0;
+    forward_b_o = 2'b0;
     if (de_mw_rd_addr_i != 0) begin
         if (write_en_i && (de_mw_rd_addr_i == rs1_addr_i)) begin
-            forward_a = 2'b10;
+            forward_a_o = 2'b10;
         end
     end
 
     if (de_mw_rd_addr_i != 0) begin
         if (write_en_i && (de_mw_rd_addr_i == rs2_addr_i)) begin
-            forward_b = 2'b10;
+            forward_b_o = 2'b10;
         end
     end
 end

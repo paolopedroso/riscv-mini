@@ -30,7 +30,7 @@ always_comb begin
     de_mw_flush_o = 1'b0;
 
     // Load Use Hazard
-    if ((rd_addr_i == rs1_addr_i || rd_addr_i == rs2_addr_i) && rd_addr_i != 0) begin
+    if (mem_read_i && (rd_addr_i == rs1_addr_i || rd_addr_i == rs2_addr_i) && rd_addr_i != 0) begin
         stall_o = 1'b1;
         if_de_flush_o = 1'b1;
     

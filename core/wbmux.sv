@@ -6,8 +6,6 @@
  * Write Back Mux
  */
 
-import riscv_pkg::*;
-
 module wbmux (
     input logic [2:0] rd_addr_i,
     input logic [15:0] read_data_i,
@@ -19,6 +17,8 @@ module wbmux (
     output logic [15:0] write_data_o,
     output logic write_valid_o
 );
+
+import riscv_pkg::*;
 
 wb_src_t wb_sel;
 assign wb_sel = wb_src_t'(wb_sel_i);

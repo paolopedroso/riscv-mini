@@ -164,8 +164,9 @@ always_comb begin
     case(forward_a)
         2'b00: alu_rs1_data = rs1_data;
         2'b10: alu_rs1_data = de_mw_alu_data;
-    endcase
     default: alu_rs1_data = rs1_data;
+    endcase
+
 end
 
 always_comb begin

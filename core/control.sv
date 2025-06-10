@@ -6,7 +6,6 @@
  * Control Unit
  */
 
-import riscv_pkg::*;
 
 module control (
     input logic [2:0] op_i,
@@ -25,6 +24,8 @@ module control (
     output logic jalr_en_o,
     output logic branch_en_o
 );
+
+import riscv_pkg::*;
 
 opcode_t opcode;
 assign opcode = opcode_t'(op_i);

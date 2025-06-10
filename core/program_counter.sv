@@ -28,7 +28,7 @@ always_comb begin
     if (jal_en) begin
         pc_next = pc_i + imm_data_i;
     end else if (jalr_en) begin
-        pc_next = pc_i + alu_data_i;
+        pc_next = alu_data_i;
     end else if (branch_en) begin
         pc_next = pc_i + imm_data_i;
     end else begin

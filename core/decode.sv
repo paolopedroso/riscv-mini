@@ -6,7 +6,6 @@
  * Simple 16-bit Decoder Unit
  */
 
-import riscv_pkg::*;
 
 module decode (
     input logic [15:0] instr,
@@ -23,6 +22,8 @@ module decode (
     // output logic       mem_write_o,
     // output logic       mem_read_o
 );
+
+import riscv_pkg::*;
 
 opcode_t opcode;
 assign opcode = opcode_t'(instr[2:0]);

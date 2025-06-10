@@ -33,7 +33,7 @@ always_ff @(posedge clk) begin
     end else if (regw_en_i && (rd_addr_i != 0)) begin
         register[rd_addr_i] <= rd_data_i;
 
-        $display("Register %0d written with data %0d", rd_addr_i, rd_data_i);
+        $display("REG: Register %0d written with data %0d", rd_addr_i, rd_data_i);
     end
 end
 

@@ -6,7 +6,6 @@
  *  Simple 16-bit ALU
  */
 
-import riscv_pkg::*;
 
 module alu (
     input logic [15:0] rs1_data_i,
@@ -18,8 +17,9 @@ module alu (
     input logic jalr_en_i,
 
     output logic [15:0] alu_data_o
-
 );
+
+import riscv_pkg::*;
 
 logic [15:0] operand_b;
 
@@ -28,6 +28,10 @@ assign alu_sel = alu_src_t'(func4);
 
 always_comb begin : alu
     operand_b = (imm_en_i) ? imm_data_i : rs2_data_i;
+    
+    // $display("ALU: Operand A: %d", rs1_data_i);
+    // $display("ALU: Operand B: %d", operand_b);
+
     if (jalr_en_i) begin
         alu_data_o = (rs1_data_i + imm_data_i) & 16'hFFFE;
     end else begin
@@ -43,6 +47,7 @@ always_comb begin : alu
             SLT: alu_data_o = (rs1_data_i < operand_b) ? 16'b1 : 16'b0;
             default: alu_data_o = 16'b0;
         endcase
+        // $display("ALU: alu_data_o: %d", alu_data_o);
     end
 end
 
