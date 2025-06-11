@@ -1,5 +1,8 @@
-# RISC-V MINI
+# RISC-V MINI (In Dev)
 A small 3-stage RV16I RISC-V Processor
+
+## Architecture
+![3 stage risc diagram](https://github.com/user-attachments/assets/74d77f71-d339-403a-ac02-8d86979679a4)
 
 ## Testing
 Prerequisites
